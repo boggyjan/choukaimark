@@ -12,3 +12,30 @@ body {
   background: #111;
   color: #eee;
 }
+
+.yt-player {
+  iframe {
+    display: block;
+  }
+}
+.timeline-wrapper {
+  background: #111;
+  padding: 40px 12px;
+
+  .timeline {
+    position: relative;
+    height: 10px;
+    border-bottom: 1px solid #333;
+
+    .time-item {
+      position: absolute;
+      background: #f00;
+      height: 5px;
+      min-width: 3px;
+    }
+  }
+}
+
+.actions {
+  margin: 20px 0;
+}

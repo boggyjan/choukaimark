@@ -1,21 +1,45 @@
 <template>
   <div class="site-wrapper">
-    <site-header />
-    <div class="row">
-      <div class="col-sm-8">
-        <div id="player" style="border-width: 3px;"></div>
-        <a href="#" class="btn btn-primary"
-          @mousedown.prevent="markStart()"
-          @mouseup.prevent="markEnd()">Mark</a>
+    <site-header :videoId="videoId" @changeVideo="playVideo($event)" />
+    <div class="main">
+      <div class="yt-player">
+        <div id="player"></div>
+        <div class="timeline-wrapper">
+          <div class="timeline">
+            <div
+              v-for="(mark, idx) in marks"
+              :key="`timeline_mark_${idx}`"
+              @click="playFromMark(mark)"
+              :style="`
+                left: ${ mark.start / videoDuration * 100 }%;
+                width: ${ (mark.end - mark.start) / videoDuration * 100 }%;
+              `"
+              class="time-item"></div>
+          </div>
+        </div>
       </div>
-      <div class="col-sm-4">
-        <ul class="list-group">
-          <li class="list-group-item" v-for="mark in marks">
-            {{ Math.floor(mark.start * 10) / 10 }}s
-            -
-            {{ Math.floor(mark.end * 10) / 10 }}s
-          </li>
-        </ul>
+      <div class="container-fluid">
+        <div class="actions">
+          <a
+            @mousedown.prevent="markStart()"
+            @mouseup.prevent="markEnd()"
+            :class="{ disabled: !markable }"
+            href="#"
+            class="btn btn-primary">Mark</a>
+        </div>
+        <div>
+          <ul class="list-group">
+            <li
+              v-for="(mark, idx) in marks"
+              :key="`list_mark_${idx}`"
+              @click="playFromMark(mark)"
+              class="list-group-item">
+              {{ Math.floor(mark.start * 10) / 10 }}s
+              -
+              {{ Math.floor(mark.end * 10) / 10 }}s
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
@@ -29,6 +53,8 @@ export default {
     return {
       player: null,
       playerId: 'player',
+      videoId: 'IzlqgYAYmCc',
+      videoDuration: 0,
       markable: false,
       markTime: {
         start: 0,
@@ -42,38 +68,28 @@ export default {
   },
   methods: {
     onYouTubeIframeAPIReady () {
-      this.player = new window.YT.Player(this.playerId, {
-          width: '100%',
-          height: '450',
-          videoId: 'IzlqgYAYmCc',
-          events: {
-            'onReady': this.onPlayerReady,
-            'onStateChange': this.onPlayerStateChange
-          }
-      })
+      if (this.videoId) {
+        this.playVideo()
+      }
     },
     onPlayerReady(event) {
-      document.getElementById(this.playerId).style.borderColor = '#FF6D00'
+      this.videoDuration = this.player.getDuration()
     },
     changeBorderColor(playerStatus) {
-      var color
       this.markable = false
       if (playerStatus == -1) {
-        color = "#37474F" // unstarted = gray
+        // unstarted
       } else if (playerStatus == 0) {
-        color = "#FFFF00" // ended = yellow
+        // ended
       } else if (playerStatus == 1) {
+        // playing
         this.markable = true
-        color = "#33691E" // playing = green
       } else if (playerStatus == 2) {
-        color = "#DD2C00" // paused = red
+        // paused
       } else if (playerStatus == 3) {
-        color = "#AA00FF" // buffering = purple
+        // buffering
       } else if (playerStatus == 5) {
-        color = "#FF6DOO" // video cued = orange
-      }
-      if (color) {
-        document.getElementById(this.playerId).style.borderColor = color
+        // video cued
       }
     },
     onPlayerStateChange(event) {
@@ -105,6 +121,29 @@ export default {
     },
     makeMark (start, end) {
       this.marks.push({ start, end })
+    },
+    playVideo (vid) {
+      this.marks = []
+      if (vid) {
+        this.videoId = vid
+      }
+      if (!this.player) {
+        this.player = new window.YT.Player(this.playerId, {
+          width: '100%',
+          height: '450',
+          videoId: this.videoId,
+          events: {
+            'onReady': this.onPlayerReady,
+            'onStateChange': this.onPlayerStateChange
+          }
+        })
+      } else {
+        this.player.loadVideoById(this.videoId, 0, 'large')
+      }
+    },
+    playFromMark ({ start, end }) {
+      this.player.seekTo(start, true)
+      this.player.playVideo()
     }
   },
   mounted () {
