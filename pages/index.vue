@@ -1,6 +1,8 @@
 <template>
   <div class="site-wrapper">
-    <site-header :videoId="videoId" @changeVideo="playVideo($event)" />
+    <site-header
+      :videoId="videoId"
+      @changeVideo="playVideo($event)" />
     <div class="main">
       <div class="yt-player">
         <div id="player"></div>
@@ -73,7 +75,6 @@ export default {
       }
     },
     onPlayerReady(event) {
-      this.videoDuration = this.player.getDuration()
     },
     changeBorderColor(playerStatus) {
       this.markable = false
@@ -83,6 +84,7 @@ export default {
         // ended
       } else if (playerStatus == 1) {
         // playing
+        this.videoDuration = this.player.getDuration()
         this.markable = true
       } else if (playerStatus == 2) {
         // paused
@@ -123,6 +125,11 @@ export default {
       this.marks.push({ start, end })
     },
     playVideo (vid) {
+      if (vid && vid.indexOf('http') > -1) {
+        var parseUrl = vid.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/)
+        vid = parseUrl.length ? parseUrl[1] : vid
+      }
+      //
       this.marks = []
       if (vid) {
         this.videoId = vid
