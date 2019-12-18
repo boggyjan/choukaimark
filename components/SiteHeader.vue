@@ -23,6 +23,11 @@ export default {
       vid: this.videoId
     }
   },
+  watch: {
+    videoId (val) {
+      this.vid = val
+    }
+  },
   props: ['videoId']
 }
 </script>

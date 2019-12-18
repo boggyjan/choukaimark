@@ -2,21 +2,22 @@
   <div class="site-wrapper">
     <site-header
       :videoId="videoId"
-      @changeVideo="playVideo($event)" />
+      @changeVideo="setVideo($event)" />
     <div class="main">
-      <div class="yt-player">
+      <div class="yt-player" v-show="videoId">
         <div id="player"></div>
         <div class="timeline-wrapper">
           <div class="timeline">
-            <div
+            <a
               v-for="(mark, idx) in marks"
               :key="`timeline_mark_${idx}`"
-              @click="playFromMark(mark)"
+              @click.prevent="playFromMark(mark)"
               :style="`
                 left: ${ mark.start / videoDuration * 100 }%;
                 width: ${ (mark.end - mark.start) / videoDuration * 100 }%;
               `"
-              class="time-item"></div>
+              href="#"
+              class="time-item"></a>
           </div>
         </div>
       </div>
@@ -30,17 +31,18 @@
             class="btn btn-primary">Mark</a>
         </div>
         <div>
-          <ul class="list-group">
-            <li
+          <div class="list-group">
+            <a
               v-for="(mark, idx) in marks"
               :key="`list_mark_${idx}`"
-              @click="playFromMark(mark)"
+              @click.prevent="playFromMark(mark)"
+              href="#"
               class="list-group-item">
               {{ Math.floor(mark.start * 10) / 10 }}s
               -
               {{ Math.floor(mark.end * 10) / 10 }}s
-            </li>
-          </ul>
+            </a>
+          </div>
         </div>
       </div>
     </div>
@@ -55,14 +57,41 @@ export default {
     return {
       player: null,
       playerId: 'player',
-      videoId: 'IzlqgYAYmCc',
+      videoId: null,
       videoDuration: 0,
       markable: false,
-      markTime: {
-        start: 0,
-        end: 0
-      },
-      marks: []
+      dataStore: [],
+      interval: null,
+      version: 1
+    }
+  },
+  watch: {
+    dataStore: {
+      deep: true,
+      handler (val) {
+        console.log('watched!')
+      }
+    }
+  },
+  computed: {
+    //
+    // yt thumb https://img.youtube.com/vi/IzlqgYAYmCc/0.jpg
+    //
+    marks () {
+      if (this.videoId) {
+        if (!this.dataStore.filter(data => data.vid === this.videoId).length) {
+          this.dataStore.push({
+            vid: this.videoId,
+            marks: []
+          })
+        }
+        return this.dataStore.filter(data => data.vid === this.videoId)[0].marks
+      } else {
+        return null
+      }
+    },
+    storeName () {
+      return `ckm_ds__v_${this.version}`
     }
   },
   components: {
@@ -71,7 +100,7 @@ export default {
   methods: {
     onYouTubeIframeAPIReady () {
       if (this.videoId) {
-        this.playVideo()
+        this.setVideo()
       }
     },
     onPlayerReady(event) {
@@ -112,32 +141,38 @@ export default {
     },
     markStart () {
       if (this.markable) {
-        this.markTime.start = this.player.getCurrentTime()
+        var time = this.player.getCurrentTime()
+        this.makeMark(time, time)
+        this.interval = setInterval(this.updateMarkTime, 10)
+      }
+    },
+    updateMarkTime () {
+      if (this.markable) {
+        this.marks[this.marks.length - 1].end = this.player.getCurrentTime()
       }
     },
     markEnd () {
-      if (this.markable) {
-        this.markTime.end = this.player.getCurrentTime()
-        this.makeMark(this.markTime.start, this.markTime.end)
-      }
+      this.updateMarkTime()
+      clearInterval(this.interval)
+      localStorage.setItem(this.storeName, JSON.stringify(this.dataStore))
     },
     makeMark (start, end) {
       this.marks.push({ start, end })
     },
-    playVideo (vid) {
+    setVideo (vid) {
       if (vid && vid.indexOf('http') > -1) {
         var parseUrl = vid.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/)
         vid = parseUrl.length ? parseUrl[1] : vid
       }
       //
-      this.marks = []
+      // this.marks = []
       if (vid) {
         this.videoId = vid
       }
       if (!this.player) {
         this.player = new window.YT.Player(this.playerId, {
           width: '100%',
-          height: '450',
+          height: '400',
           videoId: this.videoId,
           events: {
             'onReady': this.onPlayerReady,

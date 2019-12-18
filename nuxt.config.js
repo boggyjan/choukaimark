@@ -39,7 +39,7 @@ export default {
   */
   modules: [
     // Doc: https://bootstrap-vue.js.org
-    'bootstrap-vue/nuxt',
+    // 'bootstrap-vue/nuxt',
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
@@ -63,3 +63,9 @@ export default {
     }
   }
 }
+
+// package.json
+//   "dependencies": {
+//     "bootstrap": "^4.1.3",
+//     "bootstrap-vue": "^2.0.0"
+//   }
