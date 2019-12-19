@@ -5,7 +5,7 @@ html {
 
 body {
   margin: 0;
-  background: #222;
+  background: #111;
   font-size: 16px;
   line-height: 1.4;
   letter-spacing: 1px;
@@ -26,7 +26,7 @@ button {
 
 .site-header {
   padding: 20px;
-  background: #111;
+  background: #000;
   &-back-btn {
     display: inline-block;
     margin: -20px;
@@ -127,6 +127,7 @@ button {
 /*-- player page --*/
 
 .ytplayer {
+  background: #000;
   &-wrapper {
     position: relative;
     height: 0;
