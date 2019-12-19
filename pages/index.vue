@@ -1,196 +1,77 @@
 <template>
   <div class="site-wrapper">
-    <site-header
-      :videoId="videoId"
-      @changeVideo="setVideo($event)" />
+    <search-bar
+      @changeVideo="gotoVideo($event)" />
     <div class="main">
-      <div class="yt-player" v-show="videoId">
-        <div id="player"></div>
-        <div class="timeline-wrapper">
-          <div class="timeline">
-            <a
-              v-for="(mark, idx) in marks"
-              :key="`timeline_mark_${idx}`"
-              @click.prevent="playFromMark(mark)"
-              :style="`
-                left: ${ mark.start / videoDuration * 100 }%;
-                width: ${ (mark.end - mark.start) / videoDuration * 100 }%;
-              `"
-              href="#"
-              class="time-item"></a>
+      <div class="video-list">
+        <nuxt-link
+          v-for="(item, i) in userVideoLibrary"
+          :key="`video_item_${i}`"
+          :to="localePath({ name: 'id', params: { id: item.vid } })"
+          class="video-list__item">
+          <div class="video-list__item-thumb">
+            <img :src="`https://img.youtube.com/vi/${ item.vid }/0.jpg`" class="video-list__item-thumb-img">
           </div>
-        </div>
-      </div>
-      <div class="container-fluid">
-        <div class="actions">
-          <a
-            @mousedown.prevent="markStart()"
-            @mouseup.prevent="markEnd()"
-            :class="{ disabled: !markable }"
-            href="#"
-            class="btn btn-primary">Mark</a>
-        </div>
-        <div>
-          <div class="list-group">
-            <a
-              v-for="(mark, idx) in marks"
-              :key="`list_mark_${idx}`"
-              @click.prevent="playFromMark(mark)"
-              href="#"
-              class="list-group-item">
-              {{ Math.floor(mark.start * 10) / 10 }}s
-              -
-              {{ Math.floor(mark.end * 10) / 10 }}s
-            </a>
+          <div class="video-list__item-text">
+            <div class="video-list__item-text-title">
+              {{ item.title || item.vid }}
+            </div>
+            <div class="video-list__item-text-desc">
+              {{ $t('index.num_of_marks', { s: item.marks.length }) }}
+            </div>
           </div>
-        </div>
+        </nuxt-link>
       </div>
     </div>
+    <!-- https://www.youtube.com/watch?v=EQApmmLyFqQ -->
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import SiteHeader from '~/components/SiteHeader.vue'
+import SearchBar from '~/components/SearchBar.vue'
 
 export default {
-  data () {
+  head () {
+    let title = this.$t('index.meta_title')
+    let desc = this.$t('index.meta_desc')
+    let image = 'https://choukai.boggy.tw/images/fb.jpg'
     return {
-      player: null,
-      playerId: 'player',
-      videoId: null,
-      videoDuration: 0,
-      markable: false,
-      dataStore: [],
-      interval: null,
-      version: 1
-    }
-  },
-  watch: {
-    dataStore: {
-      deep: true,
-      handler (val) {
-        console.log('watched!')
+      title: title,
+      meta: [
+        { hid: 'description', name: 'description', content: desc },
+        { hid: 'twitter:type', name: 'twitter:type', content: 'summary_large_image' },
+        { hid: 'twitter:title', name: 'twitter:title', content: title },
+        { hid: 'twitter:description', name: 'twitter:description', desc },
+        { hid: 'twitter:image', name: 'twitter:image', content: image },
+        { hid: 'og:type', name: 'og:type', content: 'website' },
+        { hid: 'og:title', name: 'og:title', content: title },
+        { hid: 'og:description', name: 'og:description', content: desc },
+        { hid: 'og:image', name: 'og:image', content: image },
+        { hid: 'og:url', name: 'og:url', content: process.env.DOMAIN + this.$route.fullPath }
+      ],
+      htmlAttrs: {
+        lang: this.$i18n.locales.filter(item => item.code === this.$i18n.locale)[0].iso
       }
-    }
-  },
-  computed: {
-    //
-    // yt thumb https://img.youtube.com/vi/IzlqgYAYmCc/0.jpg
-    //
-    marks () {
-      if (this.videoId) {
-        if (!this.dataStore.filter(data => data.vid === this.videoId).length) {
-          this.dataStore.push({
-            vid: this.videoId,
-            marks: []
-          })
-        }
-        return this.dataStore.filter(data => data.vid === this.videoId)[0].marks
-      } else {
-        return null
-      }
-    },
-    storeName () {
-      return `ckm_ds__v_${this.version}`
     }
   },
   components: {
-    SiteHeader
+    SiteHeader,
+    SearchBar
+  },
+  computed: {
+    ...mapGetters(['userVideoLibrary'])
   },
   methods: {
-    onYouTubeIframeAPIReady () {
-      if (this.videoId) {
-        this.setVideo()
-      }
-    },
-    onPlayerReady(event) {
-    },
-    changeBorderColor(playerStatus) {
-      this.markable = false
-      if (playerStatus == -1) {
-        // unstarted
-      } else if (playerStatus == 0) {
-        // ended
-      } else if (playerStatus == 1) {
-        // playing
-        this.videoDuration = this.player.getDuration()
-        this.markable = true
-      } else if (playerStatus == 2) {
-        // paused
-      } else if (playerStatus == 3) {
-        // buffering
-      } else if (playerStatus == 5) {
-        // video cued
-      }
-    },
-    onPlayerStateChange(event) {
-      this.changeBorderColor(event.data)
-    },
-    initYTApi () {
-      if (window && window.YT && window.YT.Player) {
-        onYouTubeIframeAPIReady()
-      } else {
-        var tag = document.createElement('script')
-        tag.src = "https://www.youtube.com/iframe_api"
-        var firstScriptTag = document.getElementsByTagName('script')[0]
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag)
-      }
-    },
-    apiOnLoad () {
-      this.onYouTubeIframeAPIReady()
-    },
-    markStart () {
-      if (this.markable) {
-        var time = this.player.getCurrentTime()
-        this.makeMark(time, time)
-        this.interval = setInterval(this.updateMarkTime, 10)
-      }
-    },
-    updateMarkTime () {
-      if (this.markable) {
-        this.marks[this.marks.length - 1].end = this.player.getCurrentTime()
-      }
-    },
-    markEnd () {
-      this.updateMarkTime()
-      clearInterval(this.interval)
-      localStorage.setItem(this.storeName, JSON.stringify(this.dataStore))
-    },
-    makeMark (start, end) {
-      this.marks.push({ start, end })
-    },
-    setVideo (vid) {
+    gotoVideo (vid) {
       if (vid && vid.indexOf('http') > -1) {
         var parseUrl = vid.match(/(?:youtu\.be\/|youtube\.com(?:\/embed\/|\/v\/|\/watch\?v=|\/user\/\S+|\/ytscreeningroom\?v=|\/sandalsResorts#\w\/\w\/.*\/))([^\/&]{10,12})/)
         vid = parseUrl.length ? parseUrl[1] : vid
+        console.log(vid)
       }
-      //
-      // this.marks = []
-      if (vid) {
-        this.videoId = vid
-      }
-      if (!this.player) {
-        this.player = new window.YT.Player(this.playerId, {
-          width: '100%',
-          height: '400',
-          videoId: this.videoId,
-          events: {
-            'onReady': this.onPlayerReady,
-            'onStateChange': this.onPlayerStateChange
-          }
-        })
-      } else {
-        this.player.loadVideoById(this.videoId, 0, 'large')
-      }
-    },
-    playFromMark ({ start, end }) {
-      this.player.seekTo(start, true)
-      this.player.playVideo()
+      this.$router.push(this.localePath({ name: 'id', params: { id: vid } }))
     }
-  },
-  mounted () {
-    this.initYTApi()
-    window.onYouTubeIframeAPIReady = this.onYouTubeIframeAPIReady
   }
 }
 </script>

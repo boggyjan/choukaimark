@@ -4,6 +4,10 @@ export default {
   /*
   ** Headers of the page
   */
+  server: {
+    host: '0.0.0.0', // default: localhost
+    port: 8888
+  },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -45,7 +49,33 @@ export default {
     '@nuxtjs/pwa',
     // Doc: https://github.com/nuxt-community/dotenv-module
     '@nuxtjs/dotenv',
+    'nuxt-i18n',
   ],
+  /*
+  ** i18n module configuration
+  */
+  i18n: {
+    locales: [
+      { code: 'tw', name: '繁體中文', iso: 'zh-Hant', file: 'tw.js' },
+      { code: 'en', name: 'English', iso: 'en', file: 'en.js' },
+      { code: 'ja', name: '日本語', iso: 'ja', file: 'ja.js' }
+    ],
+    lazy: true,
+    langDir: './i18n/',
+    defaultLocale: 'tw',
+    vueI18n: {
+      fallbackLocale: 'tw'
+    },
+    vuex: {
+      moduleName: 'i18n',
+      syncLocale: true
+    },
+    detectBrowserLanguage: {
+      useCookie: true,
+      alwaysRedirect: false
+    },
+    baseUrl: 'https://choukai.boggy.tw/'
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

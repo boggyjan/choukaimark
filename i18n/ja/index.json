@@ -1,0 +1,11 @@
+{
+  "site_title": "聴解マーク",
+  "meta_title": "聴解マーク",
+  "meta_desc": "聴解マーク",
+  "back": "戻る",
+  "num_of_marks": "%{s} マークがあります",
+  "please_input_youtube_url": "YouTubeビデオURLを入力してください",
+  "change_video_btn": "始める",
+  "player_page_title": "動画を再生して、よくわからないところがあったら、マークボタンを押してください。",
+  "mark_btn": "マーク"
+}

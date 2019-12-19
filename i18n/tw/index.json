@@ -1,0 +1,11 @@
+{
+  "site_title": "聽解Mark",
+  "meta_title": "聽解Mark",
+  "meta_desc": "聽解Mark",
+  "back": "返回",
+  "num_of_marks": "總共標示了 %{s} 個 Mark",
+  "please_input_youtube_url": "請輸入YouTube影片網址",
+  "change_video_btn": "開始標記",
+  "player_page_title": "播放影片並標記您聽不懂的地方",
+  "mark_btn": "標記"
+}
