@@ -71,6 +71,7 @@
           v-if="marks.length"
           @click.prevent="exportMarks()"
           href="#" class="export-btn">{{ $t('index.export_marks') }}</a>
+        <textarea v-if="exportContent" v-model="exportContent" class="export-content"></textarea>
       </div>
     </div>
   </div>
@@ -112,6 +113,7 @@ export default {
       markable: false,
       currentType: 0,
       interval: null,
+      exportContent: '',
       //
       playerId: 'player'
     }
@@ -223,7 +225,11 @@ export default {
       this.$store.dispatch('setVideoMarksById', { vid: this.vid, marks: JSON.parse(JSON.stringify(this.marks)) })
     },
     exportMarks () {
-      alert(JSON.stringify(this.marks))
+      var output = this.title + ' Marks\r\n\r\n'
+      this.marks.forEach(mark => {
+        output += `${Math.floor(mark.start * 100) / 100} - ${Math.floor(mark.end * 100) / 100} [${this.$t(`index.mark_type_${mark.type || 0}`)}]\r\n`
+      })
+      this.exportContent = output
     }
   },
   async asyncData ({ params, req, res, app }) {
