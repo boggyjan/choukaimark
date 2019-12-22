@@ -121,6 +121,17 @@ button {
         opacity: .7;
       }
     }
+    .remove-btn {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      padding: 5px 20px;
+      background: #333;
+      border-radius: 100px;
+      cursor: pointer;
+      font-size: 0.8em;
+      line-height: 1;
+    }
   }
 }
 
@@ -148,7 +159,52 @@ button {
 }
 
 .actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
   .mark-btn {
+    flex: 1;
+    padding: 20px 0;
+    background: #c02529;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    text-align: center;
+    transition: .3s;
+    &.disabled {
+      background: #602529;
+      color: rgba(255,255,255,0.3);
+      pointer-events: none;
+    }
+    &:hover {
+      background: #f02529;
+      color: rgba(255,255,255,1);
+    }
+  }
+  .mark-btn-1 {
+    background: #b59724;
+    &.disabled {
+      background: #605425;
+    }
+    &:hover {
+      background: #c8a623;
+    }
+  }
+  .mark-btn-2 {
+    background: #2a6d95;
+    &.disabled {
+      background: #254a60;
+    }
+    &:hover {
+      background: #3083b5;
+    }
+  }
+}
+
+.export {
+  .export-btn {
+    display: block;
     padding: 20px 0;
     background: #c02529;
     color: rgba(255,255,255,0.8);
@@ -190,7 +246,7 @@ button {
   border-bottom: 1px solid rgba(255,255,255,0.1);
 
   &__item {
-    display: block;
+    display: flex;
     padding: 25px;
     border-bottom: 1px solid rgba(255,255,255,0.1);
     &:last-child {
@@ -198,6 +254,36 @@ button {
     }
     &:hover {
       background: rgba(255,255,255,0.01);
+    }
+    .duration {
+      flex: 1;
+    }
+    .type {
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      background: #ae5656;
+      border-radius: 100px;
+      font-size: 0.8em;
+      line-height: 1;
+    }
+    .type-1 {
+      background: #aead56;
+    }
+    .type-2 {
+      background: #568dae;
+    }
+
+    .remove-btn {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+      padding: 0 20px;
+      background: #333;
+      border-radius: 100px;
+      cursor: pointer;
+      font-size: 0.8em;
+      line-height: 1;
     }
   }
 }

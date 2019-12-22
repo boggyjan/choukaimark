@@ -1,7 +1,7 @@
 <template>
   <div class="site-wrapper">
     <div class="main">
-      <div class="ytplayer" v-show="videoId">
+      <div class="ytplayer" v-show="vid">
         <div class="ytplayer-wrapper">
           <div id="player"></div>
         </div>
@@ -23,26 +23,54 @@
       <div class="mark-edit">
         <div class="actions">
           <div
-            @mousedown.prevent="markStart()"
+            @mousedown.prevent="markStart(0)"
             @mouseup.prevent="markEnd()"
+            @touchstart.prevent="markStart(0)"
+            @touchend.prevent="markEnd()"
             :class="{ disabled: !markable }"
             href="#"
-            class="mark-btn">{{ $t('index.mark_btn') }}</div>
+            class="mark-btn mark-btn-0">{{ $t('index.mark_type_0') }}</div>
+          <div
+            @mousedown.prevent="markStart(1)"
+            @mouseup.prevent="markEnd()"
+            @touchstart.prevent="markStart(1)"
+            @touchend.prevent="markEnd()"
+            :class="{ disabled: !markable }"
+            href="#"
+            class="mark-btn mark-btn-1">{{ $t('index.mark_type_1') }}</div>
+          <div
+            @mousedown.prevent="markStart(2)"
+            @mouseup.prevent="markEnd()"
+            @touchstart.prevent="markStart(2)"
+            @touchend.prevent="markEnd()"
+            :class="{ disabled: !markable }"
+            href="#"
+            class="mark-btn mark-btn-2">{{ $t('index.mark_type_2') }}</div>
         </div>
         <div>
           <div class="marks-list">
             <a
-              v-for="(mark, idx) in marks"
+              v-for="(mark, idx) in marksReverse"
               :key="`marks-list_item_${idx}`"
               @click="playFromMark(mark)"
               href="#"
               class="marks-list__item">
-              {{ Math.floor(mark.start * 10) / 10 }}s
-              -
-              {{ Math.floor(mark.end * 10) / 10 }}s
+              <span class="duration">
+                {{ Math.floor(mark.start * 10) / 10 }}s
+                -
+                {{ Math.floor(mark.end * 10) / 10 }}s
+              </span>
+              <span :class="`type-${mark.type}`" class="type">{{ $t(`index.mark_type_${mark.type || 0}`) }}</span>
+              <span @click.prevent.stop="removeMark(mark)" class="remove-btn">{{ $t('index.remove_mark') }}</span>
             </a>
           </div>
         </div>
+      </div>
+      <div class="export">
+        <a
+          v-if="marks.length"
+          @click.prevent="exportMarks()"
+          href="#" class="export-btn">{{ $t('index.export_marks') }}</a>
       </div>
     </div>
   </div>
@@ -77,44 +105,20 @@ export default {
   },
   data () {
     return {
+      title: '',
+      marks: [],
       player: null,
-      playerId: 'player',
-      // videoId: null, // in asyncData
       videoDuration: 0,
       markable: false,
-      dataStore: this.dataStore || [],
+      currentType: 0,
       interval: null,
-      version: 1
-    }
-  },
-  watch: {
-    // dataStore: {
-    //   deep: true,
-    //   handler (val) {
-    //     console.log('watched!')
-    //   }
-    // }
-    userVideoLibrary (val) {
-      this.dataStore = JSON.parse(JSON.stringify(val))
+      //
+      playerId: 'player'
     }
   },
   computed: {
-    ...mapGetters(['userVideoLibrary']),
-    //
-    // yt thumb https://img.youtube.com/vi/IzlqgYAYmCc/0.jpg
-    //
-    marks () {
-      if (this.videoId) {
-        if (!this.dataStore.filter(data => data.vid === this.videoId).length) {
-          this.dataStore.push({
-            vid: this.videoId,
-            marks: []
-          })
-        }
-        return this.dataStore.filter(data => data.vid === this.videoId)[0].marks
-      } else {
-        return null
-      }
+    marksReverse () {
+      return Object.assign([], this.marks).reverse()
     }
   },
   methods: {
@@ -131,8 +135,8 @@ export default {
       }
     },
     onYouTubeIframeAPIReady () {
-      if (this.videoId) {
-        this.setVideo(this.videoId)
+      if (this.vid) {
+        this.setVideo(this.vid)
       }
     },
     // 沒有播放器即建立播放器，然後播放影片
@@ -144,20 +148,23 @@ export default {
       //
       // this.marks = []
       if (vid) {
-        this.videoId = vid
+        this.vid = vid
       }
       if (!this.player) {
         this.player = new window.YT.Player(this.playerId, {
           // width: '100%',
           // height: '400',
-          videoId: this.videoId,
+          videoId: this.vid,
           events: {
             'onReady': this.onPlayerReady,
             'onStateChange': this.onPlayerStateChange
+          },
+          playerVars: {
+            playsinline: 1
           }
         })
       } else {
-        this.player.loadVideoById(this.videoId, 0, 'large')
+        this.player.loadVideoById(this.vid, 0, 'large')
       }
     },
     onPlayerReady (event) {
@@ -173,6 +180,10 @@ export default {
         // ended
       } else if (playerStatus == 1) {
         // playing
+        if (!this.title) {
+          var videoData = event.target.getVideoData()
+          this.$store.dispatch('setVideoTitleById', { vid: this.vid, title: videoData.title})
+        }
         this.videoDuration = this.player.getDuration()
         this.markable = true
       } else if (playerStatus == 2) {
@@ -184,10 +195,11 @@ export default {
         // video cued
       }
     },
-    markStart () {
+    markStart (type) {
+      this.currentType = type
       if (this.markable) {
-        var time = this.player.getCurrentTime()
-        this.marks.push({ start: time, end: time })
+        var time = this.player.getCurrentTime() - 0.5 < 0 ? 0 : this.player.getCurrentTime() - 0.5
+        this.marks.push({ start: time, end: time, type: this.currentType })
         this.interval = setInterval(this.updateMarkTime, 10)
       }
     },
@@ -199,22 +211,30 @@ export default {
     markEnd () {
       this.updateMarkTime()
       clearInterval(this.interval)
-      this.$store.dispatch('updateUserVideoLibrary', this.dataStore)
+      this.$store.dispatch('setVideoMarksById', { vid: this.vid, marks: JSON.parse(JSON.stringify(this.marks)) })
     },
     playFromMark ({ start, end }) {
       this.player.seekTo(start, true)
       this.player.playVideo()
+    },
+    removeMark ({ start, end }) {
+      var idx = this.marks.findIndex(item => item.start === start && item.end === end)
+      this.marks.splice(idx, 1)
+      this.$store.dispatch('setVideoMarksById', { vid: this.vid, marks: JSON.parse(JSON.stringify(this.marks)) })
+    },
+    exportMarks () {
+      alert(JSON.stringify(this.marks))
     }
   },
   async asyncData ({ params, req, res, app }) {
     return {
-      videoId: params.id
+      vid: params.id
     }
   },
-  mounted () {
-    if (this.userVideoLibrary.length) {
-      this.dataStore = JSON.parse(JSON.stringify(this.userVideoLibrary))
-    }
+  async mounted () {
+    var videoData = await this.$store.dispatch('getVideoData', this.vid)
+    this.title = videoData.title
+    this.marks = videoData.marks
     this.initYTApi()
   },
   beforeDestroy () {

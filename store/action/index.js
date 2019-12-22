@@ -1,5 +1,8 @@
 export default {
   common: {
-    updateUserVideoLibrary: 'UPDATE_USER_VIDEO_LIBRARY'
+    updateVideoList: 'UPDATE_VIDEO_LIST',
+    updateVideo: 'UPDATE_VIDEO',
+    updateVideoMarks: 'UPDATE_VIDEO_MARKS',
+    updateVideoTitle: 'UPDATE_VIDEO_TITLE'
   }
 }

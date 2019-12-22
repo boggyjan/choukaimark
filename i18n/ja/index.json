@@ -7,5 +7,10 @@
   "please_input_youtube_url": "YouTubeビデオURLを入力してください",
   "change_video_btn": "始める",
   "player_page_title": "動画を再生して、よくわからないところがあったら、マークボタンを押してください。",
-  "mark_btn": "マーク"
+  "mark_type_0": "よくわからない",
+  "mark_type_1": "知らない単語がある",
+  "mark_type_2": "アクセントが難しい",
+  "remove_mark": "消す",
+  "remove_video": "消す",
+  "export_marks": "マークを輸出"
 }

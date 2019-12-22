@@ -7,5 +7,10 @@
   "please_input_youtube_url": "Please fill url of YouTube video",
   "change_video_btn": "Edit Marks",
   "player_page_title": "Play video and press mark button while you don't understand.",
-  "mark_btn": "Mark"
+  "mark_type_0": "Cannot understand",
+  "mark_type_1": "Unknown vocabulary",
+  "mark_type_2": "Accent is difficult",
+  "remove_mark": "Remove",
+  "remove_video": "Remove",
+  "export_marks": "Export marks"
 }

@@ -5,7 +5,7 @@
     <div class="main">
       <div class="video-list">
         <nuxt-link
-          v-for="(item, i) in userVideoLibrary"
+          v-for="(item, i) in videoList"
           :key="`video_item_${i}`"
           :to="localePath({ name: 'id', params: { id: item.vid } })"
           class="video-list__item">
@@ -17,8 +17,11 @@
               {{ item.title || item.vid }}
             </div>
             <div class="video-list__item-text-desc">
-              {{ $t('index.num_of_marks', { s: item.marks.length }) }}
+              {{ $t('index.num_of_marks', { s: item.marksCount || 0 }) }}
             </div>
+          </div>
+          <div class="video-list__item-action">
+            <a href="#" @click.prevent.stop="removeVideo(item.vid)" class="remove-btn">{{ $t('index.remove_video') }}</a>
           </div>
         </nuxt-link>
       </div>
@@ -56,12 +59,12 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapGetters(['videoList'])
+  },
   components: {
     SiteHeader,
     SearchBar
-  },
-  computed: {
-    ...mapGetters(['userVideoLibrary'])
   },
   methods: {
     gotoVideo (vid) {
@@ -70,8 +73,15 @@ export default {
         vid = parseUrl.length ? parseUrl[1] : vid
         console.log(vid)
       }
+      //
       this.$router.push(this.localePath({ name: 'id', params: { id: vid } }))
+    },
+    removeVideo (vid) {
+      this.$store.dispatch('removeVideoById', vid)
     }
+  },
+  async mounted () {
+    await this.$store.dispatch('getVideoList')
   }
 }
 </script>

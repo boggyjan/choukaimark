@@ -7,5 +7,10 @@
   "please_input_youtube_url": "請輸入YouTube影片網址",
   "change_video_btn": "開始標記",
   "player_page_title": "播放影片並標記您聽不懂的地方",
-  "mark_btn": "標記"
+  "mark_type_0": "完全聽不懂",
+  "mark_type_1": "有不懂的單字",
+  "mark_type_2": "語調困難",
+  "remove_mark": "移除",
+  "remove_video": "移除",
+  "export_marks": "匯出標記"
 }
