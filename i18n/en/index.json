@@ -10,6 +10,7 @@
   "mark_type_0": "Cannot understand",
   "mark_type_1": "Unknown vocabulary",
   "mark_type_2": "Accent is difficult",
+  "mark_type_3": "Resolved",
   "remove_mark": "Remove",
   "remove_video": "Remove",
   "export_marks": "Export marks"

@@ -10,6 +10,7 @@
   "mark_type_0": "よくわからない",
   "mark_type_1": "知らない単語がある",
   "mark_type_2": "アクセントが難しい",
+  "mark_type_3": "解決済み",
   "remove_mark": "消す",
   "remove_video": "消す",
   "export_marks": "マークを輸出"

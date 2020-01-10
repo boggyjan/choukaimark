@@ -56,11 +56,16 @@
               href="#"
               class="marks-list__item">
               <span class="duration">
-                {{ Math.floor(mark.start * 10) / 10 }}s
+                {{ Math.floor(mark.start / 60) }}:{{ Math.floor(mark.start % 60) }}
                 -
-                {{ Math.floor(mark.end * 10) / 10 }}s
+                {{ Math.floor(mark.end / 60) }}:{{ Math.floor(mark.end % 60) }}
               </span>
-              <span :class="`type-${mark.type}`" class="type">{{ $t(`index.mark_type_${mark.type || 0}`) }}</span>
+              <span
+                @click.prevent.stop="changeMark(mark)"
+                :class="`type-${mark.type}`"
+                class="type">
+                {{ $t(`index.mark_type_${mark.type || 0}`) }}
+              </span>
               <span @click.prevent.stop="removeMark(mark)" class="remove-btn">{{ $t('index.remove_mark') }}</span>
             </a>
           </div>
@@ -227,9 +232,13 @@ export default {
     exportMarks () {
       var output = this.title + ' Marks\r\n\r\n'
       this.marks.forEach(mark => {
-        output += `${Math.floor(mark.start * 100) / 100} - ${Math.floor(mark.end * 100) / 100} [${this.$t(`index.mark_type_${mark.type || 0}`)}]\r\n`
+        output += `${Math.floor(mark.start / 60)}:${Math.floor(mark.start % 60)} - ${Math.floor(mark.end / 60)}:${Math.floor(mark.end % 60)} [${this.$t(`index.mark_type_${mark.type || 0}`)}]\r\n`
       })
       this.exportContent = output
+    },
+    changeMark (mark) {
+      mark.type = mark.type < 3 ? mark.type + 1 : 0
+      this.$store.dispatch('setVideoMarksById', { vid: this.vid, marks: JSON.parse(JSON.stringify(this.marks)) })
     }
   },
   async asyncData ({ params, req, res, app }) {
