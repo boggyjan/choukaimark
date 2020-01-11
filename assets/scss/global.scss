@@ -16,8 +16,8 @@
   --markBtn2DisabledBgColor: #254a60;
   --markBtn2HoverBgColor: #3083b5;
   --exportBtnBgColor: #333;
-  --exportBtnDisabledBgColor: #602529;
-  --exportBtnHoverBgColor: #f02529;
+  --exportBtnDisabledBgColor: #222;
+  --exportBtnHoverBgColor: #555;
   --timelineMarkColor: #f00;
   --mlistBgColor: rgba(255,255,255,0.025);
   --mlistItemHoverBgColor: rgba(255,255,255,0.01);
@@ -36,7 +36,7 @@
   --footerLinkColor: rgba(255,255,255,0.5);
   --searchFontColor: #fff;
   --markBtnDefaultFontColor: rgba(255,255,255,0.8);
-  --markBtnDefaultFontColor: rgba(255,255,255,0.3);
+  --markBtnDefaultDisabledFontColor: rgba(255,255,255,0.3);
   --markBtnDefaultHoverFontColor: rgba(255,255,255,1);
   --exportBtnFontColor: rgba(255,255,255,0.8);
   --exportBtnDisabledFontColor: rgba(255,255,255,0.3);
@@ -221,7 +221,7 @@ button {
     transition: .3s;
     &.disabled {
       background: var(--markBtnDefaultDisabledBgColor);
-      color: var(--markBtnDefaultFontColor);
+      color: var(--markBtnDefaultDisabledFontColor);
       pointer-events: none;
     }
     &:hover {
@@ -270,6 +270,7 @@ button {
   }
   .export-content {
     display: block;
+    box-sizing: border-box;
     width: 100%;
     height: 400px;
     resize: vertical;
