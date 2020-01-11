@@ -1,46 +1,46 @@
 :root {
-  --bgColor: #111;
-  --headerBgColor: #000;
-  --inputBgColor: rgba(255,255,255,0.1);
-  --vlistBgColor: rgba(255,255,255,0.025);
-  --vlistItemHoverBgColor: rgba(255,255,255,0.01);
-  --removeBtnBgColor: #333;
-  --videoBgColor: #000;
-  --markBtnDefaultBgColor: #c02529;
-  --markBtnDefaultDisabledBgColor: #602529;
-  --markBtnDefaultHoverBgColor: #f02529;
-  --markBtn1BgColor: #b59724;
-  --markBtn1DisabledBgColor: #605425;
-  --markBtn1HoverBgColor: #c8a623;
-  --markBtn2BgColor: #2a6d95;
-  --markBtn2DisabledBgColor: #254a60;
-  --markBtn2HoverBgColor: #3083b5;
-  --exportBtnBgColor: #333;
-  --exportBtnDisabledBgColor: #222;
-  --exportBtnHoverBgColor: #555;
-  --timelineMarkColor: #f00;
-  --mlistBgColor: rgba(255,255,255,0.025);
-  --mlistItemHoverBgColor: rgba(255,255,255,0.01);
-  --mtypeDefaultBgColor: #ae5656;
-  --mtype1BgColor: #aead56;
-  --mtype2BgColor: #568dae;
-  --mtype3BgColor: #666;
+  --bg-color: #111;
+  --header-bg-color: #000;
+  --input-bg-color: rgba(255,255,255,0.1);
+  --vlist-bg-color: rgba(255,255,255,0.025);
+  --vlist-item-hover-bg-color: rgba(255,255,255,0.01);
+  --remove-btn-bg-color: #333;
+  --video-bg-color: #000;
+  --markbtn-default-bg-color: #c02529;
+  --markbtn-default-disabled-bg-color: #602529;
+  --markbtn-default-hover-bg-color: #f02529;
+  --markbtn-1-bg-color: #b59724;
+  --markbtn-1-disabled-bg-color: #605425;
+  --markbtn-1-hover-bg-color: #c8a623;
+  --markbtn-2-bg-color: #2a6d95;
+  --markbtn-2-disabled-bg-color: #254a60;
+  --markbtn-2-hover-bg-color: #3083b5;
+  --export-btn-bg-color: #333;
+  --export-btn-disabled-bg-color: #222;
+  --export-btn-hover-bg-color: #555;
+  --timeline-mark-color: #f00;
+  --mlist-bg-color: rgba(255,255,255,0.025);
+  --mlist-item-hover-bg-color: rgba(255,255,255,0.01);
+  --mtype-default-bg-color: #ae5656;
+  --mtype-1-bg-color: #aead56;
+  --mtype-2-bg-color: #568dae;
+  --mtype-3-bg-color: #666;
 
-  --vlistBorderColor: rgba(255,255,255,0.1);
-  --vlistItemBorderColor: rgba(255,255,255,0.1);
-  --timelineBorderBottomColor: #333;
-  --mlistBorderColor: rgba(255,255,255,0.1);
+  --vlist-border-color: rgba(255,255,255,0.1);
+  --vlist-item-border-color: rgba(255,255,255,0.1);
+  --timeline-border-bottom-color: #333;
+  --mlist-border-color: rgba(255,255,255,0.1);
 
-  --fontColor: #f0f0f0;
-  --footerFontColor: rgba(255,255,255,0.1);
-  --footerLinkColor: rgba(255,255,255,0.5);
-  --searchFontColor: #fff;
-  --markBtnDefaultFontColor: rgba(255,255,255,0.8);
-  --markBtnDefaultDisabledFontColor: rgba(255,255,255,0.3);
-  --markBtnDefaultHoverFontColor: rgba(255,255,255,1);
-  --exportBtnFontColor: rgba(255,255,255,0.8);
-  --exportBtnDisabledFontColor: rgba(255,255,255,0.3);
-  --exportBtnHoverFontColor: rgba(255,255,255,1);
+  --font-color: #f0f0f0;
+  --footer-font-color: rgba(255,255,255,0.1);
+  --footer-link-color: rgba(255,255,255,0.5);
+  --search-font-color: #fff;
+  --markbtn-default-font-color: rgba(255,255,255,0.8);
+  --markbtn-default-disabled-font-color: rgba(255,255,255,0.3);
+  --markbtn-default-hover-font-color: rgba(255,255,255,1);
+  --export-btn-font-color: rgba(255,255,255,0.8);
+  --export-btn-disabled-font-color: rgba(255,255,255,0.3);
+  --export-btn-hover-font-color: rgba(255,255,255,1);
 }
 
 html {
@@ -50,15 +50,15 @@ html {
 
 body {
   margin: 0;
-  background: var(--bgColor);
+  background: var(--bg-color);
   font-size: 16px;
   line-height: 1.4;
   letter-spacing: 1px;
-  color: var(--fontColor);
+  color: var(--font-color);
 }
 
 a {
-  color: var(--fontColor);
+  color: var(--font-color);
   text-decoration: none;
 }
 
@@ -71,7 +71,7 @@ button {
 
 .site-header {
   padding: 20px;
-  background: var(--headerBgColor);
+  background: var(--header-bg-color);
   &-back-btn {
     display: inline-block;
     margin: -20px;
@@ -88,7 +88,7 @@ button {
 
 .site-footer {
   padding: 50px 0;
-  color: var(--footerFontColor);
+  color: var(--footer-font-color);
   font-size: .8em;
   text-align: center;
   
@@ -97,7 +97,7 @@ button {
 
     &--link {
       margin: 0 5px;
-      color: var(--footerLinkColor);
+      color: var(--footer-link-color);
     }
   }
 }
@@ -108,8 +108,8 @@ button {
   &--input {
     flex: 1;
     padding: 15px 25px;
-    color: var(--searchFontColor);
-    background: var(--inputBgColor);
+    color: var(--search-font-color);
+    background: var(--input-bg-color);
     border: 0;
     border-radius: 0;
     outline: none;
@@ -117,8 +117,8 @@ button {
   &--submit {
     margin-left: 10px;
     padding: 15px 25px;
-    color: var(--searchFontColor);
-    background: var(--inputBgColor);
+    color: var(--search-font-color);
+    background: var(--input-bg-color);
     border: 0;
     border-radius: 0;
     outline: none;
@@ -127,20 +127,20 @@ button {
 
 /*-- index page --*/
 .video-list {
-  background: var(--vlistBgColor);
-  border-top: 1px solid var(--vlistBorderColor);
-  border-bottom: 1px solid var(--vlistBorderColor);
+  background: var(--vlist-bg-color);
+  border-top: 1px solid var(--vlist-border-color);
+  border-bottom: 1px solid var(--vlist-border-color);
 
   &__item {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid var(--vlistItemBorderColor);
+    border-bottom: 1px solid var(--vlist-item-border-color);
     &:last-child {
       border-bottom: 0;
     }
     &:hover {
-      background: var(--vlistItemHoverBgColor);
+      background: var(--vlist-item-hover-bg-color);
     }
 
     &-thumb {
@@ -171,7 +171,7 @@ button {
       align-items: center;
       margin-right: 20px;
       padding: 5px 20px;
-      background: var(--removeBtnBgColor);
+      background: var(--remove-btn-bg-color);
       border-radius: 100px;
       cursor: pointer;
       font-size: 0.8em;
@@ -185,7 +185,7 @@ button {
 .ytplayer {
   position: sticky;
   top: 0;
-  background: var(--videoBgColor);
+  background: var(--video-bg-color);
   &-wrapper {
     position: relative;
     height: 0;
@@ -214,37 +214,37 @@ button {
   .mark-btn {
     flex: 1;
     padding: 20px 0;
-    background: var(--markBtnDefaultBgColor);
-    color: var(--markBtnDefaultFontColor);
+    background: var(--markbtn-default-bg-color);
+    color: var(--markbtn-default-font-color);
     cursor: pointer;
     text-align: center;
     transition: .3s;
     &.disabled {
-      background: var(--markBtnDefaultDisabledBgColor);
-      color: var(--markBtnDefaultDisabledFontColor);
+      background: var(--markbtn-default-disabled-bg-color);
+      color: var(--markbtn-default-disabled-font-color);
       pointer-events: none;
     }
     &:hover {
-      background: var(--markBtnDefaultHoverBgColor);
-      color: var(--markBtnDefaultHoverFontColor);
+      background: var(--markbtn-default-hover-bg-color);
+      color: var(--markbtn-default-hover-font-color);
     }
   }
   .mark-btn-1 {
-    background: var(--markBtn1BgColor);
+    background: var(--markbtn-1-bg-color);
     &.disabled {
-      background: var(--markBtn1DisabledBgColor);
+      background: var(--markbtn-1-disabled-bg-color);
     }
     &:hover {
-      background: var(--markBtn1HoverBgColor);
+      background: var(--markbtn-1-hover-bg-color);
     }
   }
   .mark-btn-2 {
-    background: var(--markBtn2BgColor);
+    background: var(--markbtn-2-bg-color);
     &.disabled {
-      background: var(--markBtn2DisabledBgColor);
+      background: var(--markbtn-2-disabled-bg-color);
     }
     &:hover {
-      background: var(--markBtn2HoverBgColor);
+      background: var(--markbtn-2-hover-bg-color);
     }
   }
 }
@@ -253,19 +253,19 @@ button {
   .export-btn {
     display: block;
     padding: 20px 0;
-    background: var(--exportBtnBgColor);
-    color: var(--exportBtnFontColor);
+    background: var(--export-btn-bg-color);
+    color: var(--export-btn-font-color);
     cursor: pointer;
     text-align: center;
     transition: .3s;
     &.disabled {
-      background: var(--exportBtnDisabledBgColor);
-      color: var(--exportBtnDisabledFontColor);
+      background: var(--export-btn-disabled-bg-color);
+      color: var(--export-btn-disabled-font-color);
       pointer-events: none;
     }
     &:hover {
-      background: var(--exportBtnHoverBgColor);
-      color: var(--exportBtnHoverFontColor);
+      background: var(--export-btn-hover-bg-color);
+      color: var(--export-btn-hover-font-color);
     }
   }
   .export-content {
@@ -283,11 +283,11 @@ button {
   .timeline {
     position: relative;
     height: 10px;
-    border-bottom: 1px solid var(--timelineBorderBottomColor);
+    border-bottom: 1px solid var(--timeline-border-bottom-color);
 
     &--item {
       position: absolute;
-      background: var(--timelineMarkColor);
+      background: var(--timeline-mark-color);
       height: 5px;
       min-width: 3px;
     }
@@ -295,19 +295,19 @@ button {
 }
 
 .marks-list {
-  background: var(--mlistBgColor);
-  border-top: 1px solid var(--mlistBorderColor);
-  border-bottom: 1px solid var(--mlistBorderColor);
+  background: var(--mlist-bg-color);
+  border-top: 1px solid var(--mlist-border-color);
+  border-bottom: 1px solid var(--mlist-border-color);
 
   &__item {
     display: flex;
     padding: 25px;
-    border-bottom: 1px solid var(--mlistBorderColor);
+    border-bottom: 1px solid var(--mlist-border-color);
     &:last-child {
       border-bottom: 0;
     }
     &:hover {
-      background: var(--mlistItemHoverBgColor);
+      background: var(--mlist-item-hover-bg-color);
     }
     .duration {
       flex: 1;
@@ -316,19 +316,19 @@ button {
       display: flex;
       align-items: center;
       padding: 0 20px;
-      background: var(--mtypeDefaultBgColor);
+      background: var(--mtype-default-bg-color);
       border-radius: 100px;
       font-size: 0.8em;
       line-height: 1;
     }
     .type-1 {
-      background: var(--mtype1BgColor);
+      background: var(--mtype-1-bg-color);
     }
     .type-2 {
-      background: var(--mtype2BgColor);
+      background: var(--mtype-2-bg-color);
     }
     .type-3 {
-      background: var(--mtype3BgColor);
+      background: var(--mtype-3-bg-color);
     }
 
     .remove-btn {
@@ -336,7 +336,7 @@ button {
       align-items: center;
       margin-left: 10px;
       padding: 0 20px;
-      background: var(--removeBtnBgColor);
+      background: var(--remove-btn-bg-color);
       border-radius: 100px;
       cursor: pointer;
       font-size: 0.8em;
