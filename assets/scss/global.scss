@@ -1,3 +1,48 @@
+:root {
+  --bgColor: #111;
+  --headerBgColor: #000;
+  --inputBgColor: rgba(255,255,255,0.1);
+  --vlistBgColor: rgba(255,255,255,0.025);
+  --vlistItemHoverBgColor: rgba(255,255,255,0.01);
+  --removeBtnBgColor: #333;
+  --videoBgColor: #000;
+  --markBtnDefaultBgColor: #c02529;
+  --markBtnDefaultDisabledBgColor: #602529;
+  --markBtnDefaultHoverBgColor: #f02529;
+  --markBtn1BgColor: #b59724;
+  --markBtn1DisabledBgColor: #605425;
+  --markBtn1HoverBgColor: #c8a623;
+  --markBtn2BgColor: #2a6d95;
+  --markBtn2DisabledBgColor: #254a60;
+  --markBtn2HoverBgColor: #3083b5;
+  --exportBtnBgColor: #333;
+  --exportBtnDisabledBgColor: #602529;
+  --exportBtnHoverBgColor: #f02529;
+  --timelineMarkColor: #f00;
+  --mlistBgColor: rgba(255,255,255,0.025);
+  --mlistItemHoverBgColor: rgba(255,255,255,0.01);
+  --mtypeDefaultBgColor: #ae5656;
+  --mtype1BgColor: #aead56;
+  --mtype2BgColor: #568dae;
+  --mtype3BgColor: #666;
+
+  --vlistBorderColor: rgba(255,255,255,0.1);
+  --vlistItemBorderColor: rgba(255,255,255,0.1);
+  --timelineBorderBottomColor: #333;
+  --mlistBorderColor: rgba(255,255,255,0.1);
+
+  --fontColor: #f0f0f0;
+  --footerFontColor: rgba(255,255,255,0.1);
+  --footerLinkColor: rgba(255,255,255,0.5);
+  --searchFontColor: #fff;
+  --markBtnDefaultFontColor: rgba(255,255,255,0.8);
+  --markBtnDefaultFontColor: rgba(255,255,255,0.3);
+  --markBtnDefaultHoverFontColor: rgba(255,255,255,1);
+  --exportBtnFontColor: rgba(255,255,255,0.8);
+  --exportBtnDisabledFontColor: rgba(255,255,255,0.3);
+  --exportBtnHoverFontColor: rgba(255,255,255,1);
+}
+
 html {
   font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
     Roboto, 'Helvetica Neue', Arial, sans-serif;
@@ -5,15 +50,15 @@ html {
 
 body {
   margin: 0;
-  background: #111;
+  background: var(--bgColor);
   font-size: 16px;
   line-height: 1.4;
   letter-spacing: 1px;
-  color: #f0f0f0;
+  color: var(--fontColor);
 }
 
 a {
-  color: #f0f0f0;
+  color: var(--fontColor);
   text-decoration: none;
 }
 
@@ -26,7 +71,7 @@ button {
 
 .site-header {
   padding: 20px;
-  background: #000;
+  background: var(--headerBgColor);
   &-back-btn {
     display: inline-block;
     margin: -20px;
@@ -43,7 +88,7 @@ button {
 
 .site-footer {
   padding: 50px 0;
-  color: #333;
+  color: var(--footerFontColor);
   font-size: .8em;
   text-align: center;
   
@@ -52,7 +97,7 @@ button {
 
     &--link {
       margin: 0 5px;
-      color: rgba(255,255,255,0.5);
+      color: var(--footerLinkColor);
     }
   }
 }
@@ -63,8 +108,8 @@ button {
   &--input {
     flex: 1;
     padding: 15px 25px;
-    color: #fff;
-    background: rgba(255,255,255,0.1);
+    color: var(--searchFontColor);
+    background: var(--inputBgColor);
     border: 0;
     border-radius: 0;
     outline: none;
@@ -72,8 +117,8 @@ button {
   &--submit {
     margin-left: 10px;
     padding: 15px 25px;
-    color: #fff;
-    background: rgba(255,255,255,0.1);
+    color: var(--searchFontColor);
+    background: var(--inputBgColor);
     border: 0;
     border-radius: 0;
     outline: none;
@@ -82,20 +127,20 @@ button {
 
 /*-- index page --*/
 .video-list {
-  background: rgba(255,255,255,0.025);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  background: var(--vlistBgColor);
+  border-top: 1px solid var(--vlistBorderColor);
+  border-bottom: 1px solid var(--vlistBorderColor);
 
   &__item {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid var(--vlistItemBorderColor);
     &:last-child {
       border-bottom: 0;
     }
     &:hover {
-      background: rgba(255,255,255,0.01);
+      background: var(--vlistItemHoverBgColor);
     }
 
     &-thumb {
@@ -126,7 +171,7 @@ button {
       align-items: center;
       margin-right: 20px;
       padding: 5px 20px;
-      background: #333;
+      background: var(--removeBtnBgColor);
       border-radius: 100px;
       cursor: pointer;
       font-size: 0.8em;
@@ -138,7 +183,9 @@ button {
 /*-- player page --*/
 
 .ytplayer {
-  background: #000;
+  position: sticky;
+  top: 0;
+  background: var(--videoBgColor);
   &-wrapper {
     position: relative;
     height: 0;
@@ -167,37 +214,37 @@ button {
   .mark-btn {
     flex: 1;
     padding: 20px 0;
-    background: #c02529;
-    color: rgba(255,255,255,0.8);
+    background: var(--markBtnDefaultBgColor);
+    color: var(--markBtnDefaultFontColor);
     cursor: pointer;
     text-align: center;
     transition: .3s;
     &.disabled {
-      background: #602529;
-      color: rgba(255,255,255,0.3);
+      background: var(--markBtnDefaultDisabledBgColor);
+      color: var(--markBtnDefaultFontColor);
       pointer-events: none;
     }
     &:hover {
-      background: #f02529;
-      color: rgba(255,255,255,1);
+      background: var(--markBtnDefaultHoverBgColor);
+      color: var(--markBtnDefaultHoverFontColor);
     }
   }
   .mark-btn-1 {
-    background: #b59724;
+    background: var(--markBtn1BgColor);
     &.disabled {
-      background: #605425;
+      background: var(--markBtn1DisabledBgColor);
     }
     &:hover {
-      background: #c8a623;
+      background: var(--markBtn1HoverBgColor);
     }
   }
   .mark-btn-2 {
-    background: #2a6d95;
+    background: var(--markBtn2BgColor);
     &.disabled {
-      background: #254a60;
+      background: var(--markBtn2DisabledBgColor);
     }
     &:hover {
-      background: #3083b5;
+      background: var(--markBtn2HoverBgColor);
     }
   }
 }
@@ -206,19 +253,19 @@ button {
   .export-btn {
     display: block;
     padding: 20px 0;
-    background: #c02529;
-    color: rgba(255,255,255,0.8);
+    background: var(--exportBtnBgColor);
+    color: var(--exportBtnFontColor);
     cursor: pointer;
     text-align: center;
     transition: .3s;
     &.disabled {
-      background: #602529;
-      color: rgba(255,255,255,0.3);
+      background: var(--exportBtnDisabledBgColor);
+      color: var(--exportBtnDisabledFontColor);
       pointer-events: none;
     }
     &:hover {
-      background: #f02529;
-      color: rgba(255,255,255,1);
+      background: var(--exportBtnHoverBgColor);
+      color: var(--exportBtnHoverFontColor);
     }
   }
   .export-content {
@@ -235,11 +282,11 @@ button {
   .timeline {
     position: relative;
     height: 10px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid var(--timelineBorderBottomColor);
 
     &--item {
       position: absolute;
-      background: #f00;
+      background: var(--timelineMarkColor);
       height: 5px;
       min-width: 3px;
     }
@@ -247,19 +294,19 @@ button {
 }
 
 .marks-list {
-  background: rgba(255,255,255,0.025);
-  border-top: 1px solid rgba(255,255,255,0.1);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  background: var(--mlistBgColor);
+  border-top: 1px solid var(--mlistBorderColor);
+  border-bottom: 1px solid var(--mlistBorderColor);
 
   &__item {
     display: flex;
     padding: 25px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid var(--mlistBorderColor);
     &:last-child {
       border-bottom: 0;
     }
     &:hover {
-      background: rgba(255,255,255,0.01);
+      background: var(--mlistItemHoverBgColor);
     }
     .duration {
       flex: 1;
@@ -268,19 +315,19 @@ button {
       display: flex;
       align-items: center;
       padding: 0 20px;
-      background: #ae5656;
+      background: var(--mtypeDefaultBgColor);
       border-radius: 100px;
       font-size: 0.8em;
       line-height: 1;
     }
     .type-1 {
-      background: #aead56;
+      background: var(--mtype1BgColor);
     }
     .type-2 {
-      background: #568dae;
+      background: var(--mtype2BgColor);
     }
     .type-3 {
-      background: #666;
+      background: var(--mtype3BgColor);
     }
 
     .remove-btn {
@@ -288,7 +335,7 @@ button {
       align-items: center;
       margin-left: 10px;
       padding: 0 20px;
-      background: #333;
+      background: var(--removeBtnBgColor);
       border-radius: 100px;
       cursor: pointer;
       font-size: 0.8em;
