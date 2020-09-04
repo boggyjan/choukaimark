@@ -14,7 +14,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "@nuxtjs/dotenv": "^1.4.0",
     "@nuxtjs/pwa": "^3.0.0-0",
-    "node-sass": "^4.13.0",
+    "node-sass": "^4.13.1",
     "nuxt": "^2.0.0",
     "nuxt-i18n": "^6.4.1",
     "sass-loader": "^8.0.0"
